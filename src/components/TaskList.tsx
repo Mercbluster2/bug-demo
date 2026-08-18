@@ -35,7 +35,7 @@ export function TaskList() {
       setError(null)
       if (broken) {
         // Deliberate typo so testers can reproduce the original crash.
-        const updated = tasks.map((t: Task) => ({ ...t, done: true }))
+        const updated = taks.map((t: Task) => ({ ...t, done: true }))
         setTasks(updated)
       } else {
         setTasks(tasks.map((t) => ({ ...t, done: true })))
