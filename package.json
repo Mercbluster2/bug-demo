@@ -1,22 +1,23 @@
 {
   "name": "bug-demo",
-  "private": true,
   "version": "0.1.0",
-  "type": "module",
+  "private": true,
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
+    "dev": "next dev -p 10400",
+    "build": "next build",
+    "start": "next start -p 10400"
   },
   "dependencies": {
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "next": "14.1.0",
+    "nodemailer": "^6.9.16",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@types/react": "^18.3.3",
-    "@types/react-dom": "^18.3.0",
-    "@vitejs/plugin-react": "^4.3.1",
-    "typescript": "^5.5.3",
-    "vite": "^5.3.4"
+    "@types/node": "^20.11.16",
+    "@types/nodemailer": "^6.4.17",
+    "@types/react": "^18.2.55",
+    "@types/react-dom": "^18.2.19",
+    "typescript": "^5.3.3"
   }
 }
