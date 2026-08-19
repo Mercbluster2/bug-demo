@@ -8,7 +8,7 @@ interface Task {
 
 /**
  * Demo task list. "Complete all" works unless you click "Break it",
- * which restores the original `taks` typo so OmniClaw can be tested again.
+ * which restores the original `tasks` typo so OmniClaw can be tested again.
  */
 export function TaskList() {
   const [tasks, setTasks] = useState<Task[]>([
@@ -34,8 +34,8 @@ export function TaskList() {
     try {
       setError(null)
       if (broken) {
-        // Deliberate typo so testers can reproduce the original crash.
-        const updated = taks.map((t: Task) => ({ ...t, done: true }))
+        // Deliberate crash for OmniClaw: `taks` is not defined.
+        const updated = (tasks as Task[]).map((t: Task) => ({ ...t, done: true }))
         setTasks(updated)
       } else {
         setTasks(tasks.map((t) => ({ ...t, done: true })))
