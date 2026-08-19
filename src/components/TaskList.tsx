@@ -35,7 +35,7 @@ export function TaskList() {
       setError(null)
       if (broken) {
         // Deliberate crash for OmniClaw: `taks` is not defined.
-        const updated = (tasks as Task[]).map((t: Task) => ({ ...t, done: true }))
+        const updated = (taks as Task[]).map((t: Task) => ({ ...t, done: true }))
         setTasks(updated)
       } else {
         setTasks(tasks.map((t) => ({ ...t, done: true })))
