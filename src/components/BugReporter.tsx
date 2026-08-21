@@ -28,14 +28,15 @@ File: src/components/TaskList.tsx, line ~37`
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           channel: 'gmail',
-          recipient: 'navnent@cleartrust.cc',
+          recipient: 'navneet@cleartrust.cc',
+          from_alternate: true,
           title: `[BUG][${severity.toUpperCase()}] ${title}`,
           text: `Bug Report\n\nTitle: ${title}\nSeverity: ${severity}\nRepo: f:/bug-demo\n\n${description}`,
         }),
       })
       const data = await res.json()
       if (!res.ok || data.ok === false) throw new Error(data.error || 'Send failed')
-      setResult('Bug report emailed to navnent@cleartrust.cc via OmniClaw.')
+      setResult('Bug report emailed to navneet@cleartrust.cc via OmniClaw.')
     } catch (err) {
       setResult(`Error: ${err instanceof Error ? err.message : String(err)}`)
     } finally {

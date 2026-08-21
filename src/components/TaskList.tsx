@@ -7,9 +7,8 @@ interface Task {
 }
 
 /**
- * INTENTIONAL BUG: The "Complete all" button calls `completeAll()` which
- * references `taks` instead of `tasks` — a ReferenceError at runtime.
- * The individual toggle works fine.
+ * Demo task list. "Complete all" works unless you click "Break it",
+ * which restores the original `tasks` typo so OmniClaw can be tested again.
  */
 export function TaskList() {
   const [tasks, setTasks] = useState<Task[]>([
@@ -19,6 +18,7 @@ export function TaskList() {
   ])
   const [input, setInput] = useState('')
   const [error, setError] = useState<string | null>(null)
+  const [broken, setBroken] = useState(false)
 
   const addTask = () => {
     if (!input.trim()) return
@@ -32,13 +32,23 @@ export function TaskList() {
 
   const completeAll = () => {
     try {
-      // BUG: typo — `taks` instead of `tasks`
-      // @ts-ignore deliberate typo to create a runtime ReferenceError
-      const updated = taks.map((t: Task) => ({ ...t, done: true }))
-      setTasks(updated)
+      setError(null)
+      if (broken) {
+        // Deliberate crash for OmniClaw: `tasks` is not defined.
+        const updated = (taks as Task[]).map((t: Task) => ({ ...t, done: true }))
+        setTasks(updated)
+      } else {
+        setTasks(tasks.map((t) => ({ ...t, done: true })))
+      }
     } catch (err) {
       setError(String(err))
     }
+  }
+
+  const toggleBug = () => {
+    setBroken((prev) => !prev)
+    setError(null)
+    setTasks((current) => current.map((t) => ({ ...t, done: false })))
   }
 
   return (
@@ -77,14 +87,33 @@ export function TaskList() {
         ))}
       </ul>
 
-      <div style={{ marginTop: 12, display: 'flex', gap: 8 }}>
+      <div style={{ marginTop: 12, display: 'flex', gap: 8, flexWrap: 'wrap' }}>
         <button
           onClick={completeAll}
           style={{ padding: '8px 14px', borderRadius: 8, border: '1px solid #cbd5e1', background: '#fff', cursor: 'pointer' }}
         >
           Complete all
         </button>
+        <button
+          onClick={toggleBug}
+          style={{
+            padding: '8px 14px',
+            borderRadius: 8,
+            border: 'none',
+            background: broken ? '#b91c1c' : '#f59e0b',
+            color: '#fff',
+            fontWeight: 600,
+            cursor: 'pointer',
+          }}
+        >
+          {broken ? 'Bug is on — click to restore' : 'Break it (for testing)'}
+        </button>
       </div>
+      {broken && (
+        <p style={{ marginTop: 8, fontSize: 13, color: '#b91c1c' }}>
+          Complete all now calls `taks` and will throw ReferenceError.
+        </p>
+      )}
 
       {error && (
         <pre style={{ marginTop: 12, padding: 12, borderRadius: 8, background: '#fef2f2', color: '#b91c1c', fontSize: 13, whiteSpace: 'pre-wrap' }}>
